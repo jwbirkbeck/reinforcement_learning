@@ -11,6 +11,8 @@ class Cartpole:
         self.frames = 0
         self.won = False
         self.lost = False
+        self.input_shape = 4
+        self.output_shape = 2
 
     # Each time we take an action, we want to store what we did, what happens in the next frame, and count the frame
     def take_action(self, action):
@@ -33,12 +35,6 @@ class Cartpole:
         self.frames = 0
         self.won = False
         self.lost = False
-
-    def input_shape(self):
-        return 4
-
-    def output_shape(self):
-        return 2
 
     # We define the key listening methods as part of the environment, as the number of actions (e.g. left or right) is
     # environment specific. These are actually called by the QLearnAgent method as part of the human_game() method.

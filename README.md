@@ -1,4 +1,4 @@
-# Reinforcement Learning: Cartpole
+# Reinforcement Learning
 
 ### Purpose:
 

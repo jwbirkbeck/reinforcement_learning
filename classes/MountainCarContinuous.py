@@ -1,19 +1,18 @@
 import gym
-from pynput.keyboard import Key
+from pynput.keyboard import Key, Listener
 
-class Cartpole:
+class MountainCarContinuous:
     # Init only sets the correct environment but does not start it, there's a method for that
     def __init__(self):
-        self.env = gym.make("CartPole-v0")
+        self.env = gym.make("MountainCarContinuous-v0")
         self.observation = None
         self.reward = None
         self.done = False
         self.frames = 0
         self.won = False
         self.lost = False
-        self.input_shape = 4
-        self.output_shape = 2
-        self.pressed_action = None
+        self.input_shape = 2
+        self.output_shape = 1
 
     # Each time we take an action, we want to store what we did, what happens in the next frame, and count the frame
     def take_action(self, action):
@@ -41,9 +40,9 @@ class Cartpole:
     # environment specific. These are actually called by the QLearnAgent method as part of the human_game() method.
     def on_press(self, key):
         if key == Key.left:
-            self.pressed_action = 0
+            self.action = 0
         if key == Key.right:
-            self.pressed_action = 1
+            self.action = 1
 
     def on_release(self, key):
         if key == Key.left or Key.right:

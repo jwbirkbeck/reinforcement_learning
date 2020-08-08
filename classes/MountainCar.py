@@ -1,18 +1,18 @@
 import gym
-from pynput.keyboard import Key
+from pynput.keyboard import Key, Listener
 
-class Cartpole:
+class MountainCar:
     # Init only sets the correct environment but does not start it, there's a method for that
     def __init__(self):
-        self.env = gym.make("CartPole-v0")
+        self.env = gym.make("MountainCar-v0")
         self.observation = None
         self.reward = None
         self.done = False
         self.frames = 0
         self.won = False
         self.lost = False
-        self.input_shape = 4
-        self.output_shape = 2
+        self.input_shape = 2
+        self.output_shape = 3
         self.pressed_action = None
 
     # Each time we take an action, we want to store what we did, what happens in the next frame, and count the frame
@@ -22,10 +22,10 @@ class Cartpole:
         self.reward = reward
         self.done = done
         self.frames += 1
-        if self.frames >= 200:
+        if done and self.observation[0] >= 0.5:
             self.done = True
             self.won = True
-        elif done and self.frames < 200:
+        elif done and self.observation[0] < 0.5:
             self.lost = True
 
     # resets the env to the initial state.
@@ -42,9 +42,11 @@ class Cartpole:
     def on_press(self, key):
         if key == Key.left:
             self.pressed_action = 0
-        if key == Key.right:
+        if key == Key.up:
             self.pressed_action = 1
+        if key == Key.right:
+            self.pressed_action = 2
 
     def on_release(self, key):
-        if key == Key.left or Key.right:
+        if key == Key.left or Key.right or Key.up:
             return False

@@ -13,13 +13,11 @@ class NeuralNet:
 
 
         self.model = Sequential([
-            Dense(100, input_shape=(input_shape,)),
+            Dense(30, input_shape=(input_shape,)),
             Activation('tanh'),
-            Dense(80),
+            Dense(20),
             Activation("tanh"),
-            Dense(60),
-            Activation("tanh"),
-            Dense(40),
+            Dense(10),
             Activation("tanh"),
             Dense(output_shape),
             Activation('linear')

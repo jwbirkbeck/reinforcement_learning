@@ -20,6 +20,7 @@ class QLearnAgent:
         self.mem_sample_obs = None
         self.mem_sample_qpreds = None
         self.winstreak = 0
+        self.total_wins = 0
         self.game_counter = 0
 
     def wipe_memory(self, memory_length):
@@ -54,12 +55,16 @@ class QLearnAgent:
             elif self.game.done and self.game.won:
                 self.game_counter +=1
                 self.winstreak += 1
+                self.total_wins += 1
                 # we've won, reward the win but do not use the next frame's predictions are they are not relevant
                 current_qpreds[0, current_action] = self.game.reward
                 self.memory.append_observation(current_obs)
                 self.memory.append_qpreds(current_qpreds[0])
                 if verbose:
-                    print('{} frames in game {}, on a winstreak of {}'.format(self.game.frames, self.game_counter, self.winstreak))
+                    print('{} frames in game {}, on a winstreak of {}. Total wins {}'.format(self.game.frames,
+                                                                                             self.game_counter,
+                                                                                             self.winstreak,
+                                                                                             self.total_wins))
 
             elif self.game.done and self.game.lost:
                 self.game_counter += 1
@@ -69,7 +74,10 @@ class QLearnAgent:
                 self.memory.append_qpreds(current_qpreds[0])
                 self.winstreak = 0
                 if verbose:
-                    print('{} frames in game {}, on a winstreak of {}'.format(self.game.frames, self.game_counter, self.winstreak))
+                    print('{} frames in game {}, on a winstreak of {}. Total wins {}'.format(self.game.frames,
+                                                                                             self.game_counter,
+                                                                                             self.winstreak,
+                                                                                             self.total_wins))
 
     def play_games(self, num_games, verbose):
         for _ in range(num_games):
@@ -99,13 +107,11 @@ class QLearnAgent:
             self.game.take_action(self.action)
             if self.game.done and self.game.won:
                 time.sleep(2)
-                self.game.reset_env()
                 print("game won")
                 self.game.env.close()
 
             if self.game.done and self.game.lost:
                 time.sleep(2)
-                self.game.reset_env()
                 print("game lost")
                 self.game.env.close()
 
@@ -124,9 +130,10 @@ class QLearnAgent:
                     on_press=self.game.on_press,
                     on_release=self.game.on_release) as listener:
                 listener.join()
+            self.action = self.game.pressed_action
 
-            self.brain.predict(self.game.observation)
             self.game.take_action(self.action)
+            self.brain.predict(self.game.observation)
 
             if not self.game.done:
                 current_qpreds[0, self.action] = self.game.reward + self.discount_rate * np.max(self.brain.prediction)

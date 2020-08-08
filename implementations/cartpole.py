@@ -13,10 +13,12 @@ while agent.winstreak < 50:
 
 
 # Alternatively, we can teach the neural net by playing the game ourselves a few times:
-agent.wipe_memory()
+agent.wipe_memory(1000)
 agent.human_game()
 # since the learning rate is low for the neural net, but we want the network to learn a lot from us, we can
 # batch learn multiple times on our game. It would be better to play a few different games and monitor the performance
 # of the neural net but this hacky approach works for now.
 for _ in range(100):
     agent.batch_train(32)
+
+agent.display_gameplay()

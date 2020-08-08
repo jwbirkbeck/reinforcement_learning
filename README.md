@@ -14,3 +14,7 @@ This project uses:
 * Anaconda
 * The OpenAI Gym (install is not via a standard `conda install`, but instead with `conda install -c conda-forge gym`.
 * A few other python packages (a `requirements.txt` is provided for replicating my environment)
+
+### Current notes
+* Learning via human should maybe reward every move like a human, rather than using the normal Q updating logic. 
+* Storing all rewards and then discounting them from the end may be quicker for environments like mountain car where naive exploration will never reach the positive reward. 

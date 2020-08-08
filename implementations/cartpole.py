@@ -1,8 +1,6 @@
 from classes.QLearnAgent import QLearnAgent
 from classes.Cartpole import Cartpole
 
-input_shape =
-
 agent = QLearnAgent(game = Cartpole(),
                     input_shape=Cartpole().input_shape,
                     output_shape=Cartpole().output_shape,

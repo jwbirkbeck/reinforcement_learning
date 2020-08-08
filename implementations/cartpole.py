@@ -1,9 +1,11 @@
 from classes.QLearnAgent import QLearnAgent
 from classes.Cartpole import Cartpole
 
+input_shape =
+
 agent = QLearnAgent(game = Cartpole(),
-                    input_shape=4,
-                    output_shape=2,
+                    input_shape=Cartpole().input_shape,
+                    output_shape=Cartpole().output_shape,
                     learning_rate = 0.001)
 
 # agent.brain.keras_clear_session()

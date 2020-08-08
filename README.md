@@ -9,7 +9,7 @@ Solve the cartpole environment from the OpenAI Gym with a proof of concept scrip
 
 This project uses:
 
-* The amdgpu driver
+* The amdgpu-pro driver
 * Tensorflow, keras, and plaidML; plaidML will require a pip install and not a conda install
 * Anaconda
 * The OpenAI Gym (install is not via a standard `conda install`, but instead with `conda install -c conda-forge gym`.

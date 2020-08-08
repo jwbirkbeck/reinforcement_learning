@@ -8,6 +8,10 @@ from keras import backend
 
 class NeuralNet:
     def __init__(self, input_shape, output_shape, learning_rate):
+        self._input_shape = input_shape
+        self._output_shape = output_shape
+
+
         self.model = Sequential([
             Dense(100, input_shape=(input_shape,)),
             Activation('tanh'),
@@ -31,7 +35,7 @@ class NeuralNet:
                            metrics=['accuracy'])
 
     def predict(self, observation):
-        obs = observation.reshape((1, 4))
+        obs = observation.reshape((1, self._input_shape))
         prediction = self.model.predict(obs)
         self.prediction = prediction
 

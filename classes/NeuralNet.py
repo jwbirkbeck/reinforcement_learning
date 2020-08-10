@@ -25,9 +25,6 @@ class NeuralNet:
 
         optimizer = optimizers.Adam(lr=learning_rate)
 
-        self.prediction = None
-        self.action = None
-
         self.model.compile(optimizer=optimizer,
                            loss='mse',
                            metrics=['accuracy'])
@@ -35,7 +32,7 @@ class NeuralNet:
     def predict(self, observation):
         obs = observation.reshape((1, self._input_shape))
         prediction = self.model.predict(obs)
-        self.prediction = prediction
+        return prediction
 
     # The train output is not useful, the model itself will have been updated so this can be lost
     def train_model(self, x, y, verbose):

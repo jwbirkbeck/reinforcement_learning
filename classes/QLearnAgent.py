@@ -12,6 +12,8 @@ class QLearnAgent:
         self.brain = NeuralNet(input_shape=input_shape,
                                output_shape=output_shape,
                                learning_rate=learning_rate)
+        # Note that the current QLearnAgent only uses the observation and qpreds deques in Memory, even though the
+        # Memory class allows me to store the rewards and actions as well.
         self.memory = Memory(memory_length=memory_length)
         self.game = game
         self.winstreak = 0
@@ -22,8 +24,11 @@ class QLearnAgent:
         self._total_wins = 0
         self._game_counter = 0
 
-    def wipe_memory(self, memory_length):
-        self.memory = Memory(memory_length=memory_length)
+    def wipe_memory(self):
+        self.memory._observation.clear()
+        self.memory._qpreds.clear()
+        self.memory._reward.clear()
+        self.memory._action.clear()
 
     def calc_action(self):
         rand_num = np.random.uniform()

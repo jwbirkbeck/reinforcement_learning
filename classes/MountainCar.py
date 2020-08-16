@@ -19,14 +19,16 @@ class MountainCar:
     def take_action(self, action):
         obs, reward, done, _ = self.env.step(action)
         self.observation = obs
-        self.reward = reward
+        self.reward = obs[0]
         self.done = done
         self.frames += 1
         if done and self.observation[0] >= 0.5:
             self.done = True
             self.won = True
+            self.reward += 1
         elif done and self.observation[0] < 0.5:
             self.lost = True
+            self.reward += -1
 
     # resets the env to the initial state.
     def reset_env(self):

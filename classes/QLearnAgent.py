@@ -107,12 +107,12 @@ class QLearnAgent:
             self.game.env.render()
             self.game.take_action(action)
             if self.game.done and self.game.won:
-                time.sleep(2)
+                time.sleep(0.75)
                 print("game won")
                 self.game.env.close()
 
             if self.game.done and self.game.lost:
-                time.sleep(2)
+                time.sleep(0.75)
                 print("game lost")
                 self.game.env.close()
 

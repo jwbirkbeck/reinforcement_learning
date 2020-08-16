@@ -16,5 +16,5 @@ This project uses:
 * A few other python packages (a `requirements.txt` is provided for replicating my environment)
 
 ### Current notes
-* Learning via human should maybe reward every move like a human, rather than using the normal Q updating logic. 
+* Learning via human should maybe reward every move the network make that is like a human's, rather than using the normal Q updating logic. 
 * Storing all rewards and then discounting them from the end may be quicker, and for environments like mountain car where naive exploration will never reach the positive reward may lead to more robust learning?

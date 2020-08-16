@@ -70,7 +70,7 @@ class QLearnAgent:
             elif self.game.done and self.game.lost:
                 self._game_counter += 1
                 # we've lost, do stuff
-                current_qpreds[0, current_action] = -1
+                current_qpreds[0, current_action] = self.game.reward
                 self.memory.append_observation(current_obs)
                 self.memory.append_qpreds(current_qpreds[0])
                 self.winstreak = 0

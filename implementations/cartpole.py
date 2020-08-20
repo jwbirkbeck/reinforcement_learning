@@ -1,10 +1,12 @@
 from classes.QLearnAgent import QLearnAgent
 from classes.Cartpole import Cartpole
+from keras.backend import clear_session
+clear_session()
 
 agent = QLearnAgent(game = Cartpole(),
                     input_shape=Cartpole().input_shape,
                     output_shape=Cartpole().output_shape,
-                    learning_rate = 0.001)
+                    learning_rate = 0.01)
 
 # agent.brain.keras_clear_session()
 while agent.winstreak < 50:
@@ -21,4 +23,4 @@ agent.human_game()
 for _ in range(100):
     agent.batch_train(32)
 
-agent.display_gameplay()
+agent.display_gameplay(save_gif=True)

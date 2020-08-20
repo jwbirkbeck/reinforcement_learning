@@ -1,5 +1,8 @@
 import numpy as np
 
+# For this work, I'm following a chapter in some lecture notes from Stanford I found online:
+# http://cs229.stanford.edu/syllabus-summer2020.html 
+
 # I'll generate some simple data just to test that the neural network and the backprop algorithm is correctly constructed.
 # An extension to this would be to use e.g. the MNIST dataset to test a more real world scenario.
 
@@ -23,8 +26,8 @@ Y = np.array([0,1,0,1])
 
 class NN:
     def __init__(self):
-        # This is using the simple initialisation from the module notes - N(0,0.1) as small random weights. Mentions He
-        # and Xavier but that's beyond the requirements of this example.
+        # This is using the simple initialisation from the module notes - N(0,0.1) as small random weights. The lecture notes mention He
+        # and Xavier initalisations shortly after this method but that's beyond the requirements of this example.
         self.W1 = np.random.normal(0,0.1,16).reshape((4,4))
         self.w2 = np.random.normal(0,0.1,4)
         self.b1 = np.zeros(4)

@@ -20,9 +20,9 @@ This project uses:
 * Storing all rewards and then discounting them from the end may be quicker, and for environments like mountain car where naive exploration will never reach the positive reward may lead to more robust learning?
 
 
-# CartPole approach
+# CartPole
 
-CartPole is an introductory environment to learn to apply basic reinforcement learning concepts. The specific approach I've taken to solve the environment is:
+[CartPole](https://gym.openai.com/envs/CartPole-v0/) is an introductory environment to learn to apply basic reinforcement learning concepts. The specific approach I've taken to solve the environment is:
 * A temporal difference method, where the current state's predicted Q values for the chosen action are updated from the observation of the next state's reward and max predicted Q value. 
 * Epsilon-greedy policy for exploration (the cartpole environment is well suited to this as random actions are likely to be rewarded as the (semi-random) beginning state space is close to the optimal area in the state space. In other words, the pole starts nearly balanced so random actions will sometimes help to balance the pole, resulting in effective exploration. 
 
@@ -47,3 +47,8 @@ It took nearly 3000 episodes to train the cartpole agent to win 50 times in a ro
 200 frames in game 2792, on a winstreak of 49. Total wins 278
 200 frames in game 2793, on a winstreak of 50. Total wins 279
 ```
+
+# MountainCar
+[MountainCar](https://gym.openai.com/envs/MountainCar-v0/) is a slightly more complex environment than cartpole. On applying the classes developed for cartpole to the new environment, it's apparent that an epsilon-greedy approach to exploration is not effective. 
+
+Some googling led to a paper which discusses [eligibility traces in the mountaincar environment](https://link.springer.com/content/pdf/10.1007/BF00114726.pdf). There's a chapter on eligibility traces in [Reinforcement Learning: An Introduction](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf). I'll attempt this environment after some reading!

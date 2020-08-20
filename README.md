@@ -29,6 +29,9 @@ CartPole is an introductory environment to learn to apply basic reinforcement le
 ## Untrained and trained cartpole
 ### Untrained:
 
+* The untrained agent fails within 10-15 frames as the pole's angle exceeds the environment's limits and the game ends. 
+* The trained agents succeeds at balancing the pole within the environment's limits for 200 frames, 50 games in a row. 
+
 Untrained:          |  Trained:
 :-------------------------:|:-------------------------:
 <img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/untrained_agent_cartpole.gif" alt="Untrained" width="400">  |  <img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/trained_agent_cartpole.gif" alt="Untrained" width="400">

@@ -36,7 +36,7 @@ Untrained:          |  Trained:
 :-------------------------:|:-------------------------:
 <img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/untrained_agent_cartpole.gif" alt="Untrained" width="400">  |  <img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/trained_agent_cartpole.gif" alt="Untrained" width="400">
 
-(Note that the pole being unbalanced in the same direction in both gifs is chance - the environment with a slight perturbation to both angular velocity and position, and so could equally have started with the pole unbalanced to the left)
+(Note that the pole being unbalanced in the same direction in both gifs is chance - the environment is initialised with a slight perturbation to both angular velocity and position, and so could equally have started with the pole unbalanced to the left)
 
 It took nearly 3000 episodes to train the cartpole agent to win 50 times in a row. To win, the agent must balance the pole for 200 frames. 3000 episodes for such a simple environment is not a record by any means but demonstrates that the generalisable classes and class methods can be used for more complex environments!
 

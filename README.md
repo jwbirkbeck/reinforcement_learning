@@ -31,4 +31,14 @@ CartPole is an introductory environment to learn to apply basic reinforcement le
 
 Untrained:          |  Trained:
 :-------------------------:|:-------------------------:
-<img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/untrained_agent_cartpole.gif" alt="Untrained" width="400">  |  <img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/untrained_agent_cartpole.gif" alt="Untrained" width="400">
+<img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/untrained_agent_cartpole.gif" alt="Untrained" width="400">  |  <img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/trained_agent_cartpole.gif" alt="Untrained" width="400">
+
+It took nearly 3000 episodes to train the cartpole agent to win 50 times in a row. To win, the agent must balance the pole for 200 frames. 3000 episodes for such a simple environment is not a record by any means but demonstrates that the generalisable classes and class methods can be used for more complex environments!
+
+```
+...
+200 frames in game 2790, on a winstreak of 47. Total wins 276
+200 frames in game 2791, on a winstreak of 48. Total wins 277
+200 frames in game 2792, on a winstreak of 49. Total wins 278
+200 frames in game 2793, on a winstreak of 50. Total wins 279
+```

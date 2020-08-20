@@ -2,6 +2,7 @@ import numpy as np
 from classes.NeuralNet import NeuralNet
 from classes.Memory import Memory
 from pynput.keyboard import Listener
+from gym.wrappers import Monitor
 import time
 
 class QLearnAgent:
@@ -99,7 +100,9 @@ class QLearnAgent:
         self.brain.train_model(x = self._mem_sample_obs, y = self._mem_sample_qpreds, verbose=verbose)
         self._flush_memory_samples()
 
-    def display_gameplay(self):
+    def display_gameplay(self, save_gif = False):
+        if save_gif:
+            self.game.env = Monitor(self.game.env, 'recording', force=True)
         self.game.reset_env()
         while not self.game.done:
             self.brain.predict(self.game.observation)

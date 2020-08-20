@@ -22,4 +22,7 @@ This project uses:
 
 ## Untrained and trained cartpole
 ### Untrained:
-<img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/untrained_agent_cartpole.gif" alt="Untrained" width="400">
+
+Untrained:          |  Trained:
+:-------------------------:|:-------------------------:
+<img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/untrained_agent_cartpole.gif" alt="Untrained" width="400">  |  <img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/untrained_agent_cartpole.gif" alt="Untrained" width="400">

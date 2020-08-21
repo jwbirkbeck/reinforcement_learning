@@ -24,6 +24,8 @@ This project uses:
 
 [CartPole](https://gym.openai.com/envs/CartPole-v0/) is an introductory environment to learn to apply basic reinforcement learning concepts. The specific approach I've taken to solve the environment is:
 * A temporal difference method, where the current state's predicted Q values for the chosen action are updated from the observation of the next state's reward and max predicted Q value. 
+* Waiting until the end of the episode before training (even though TD learning allows online training).
+* Sampling the memory to avoid correlation between observations
 * Epsilon-greedy policy for exploration (the cartpole environment is well suited to this as random actions are likely to be rewarded as the (semi-random) beginning state space is close to the optimal area in the state space. In other words, the pole starts nearly balanced so random actions will sometimes help to balance the pole, resulting in effective exploration. 
 
 ## Untrained and trained cartpole

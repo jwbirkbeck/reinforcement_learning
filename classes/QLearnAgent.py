@@ -25,10 +25,6 @@ class QLearnAgent:
         self._total_wins = 0
         self._game_counter = 0
 
-    def wipe_memory(self):
-        self.memory._observation.clear()
-        self.memory._qpreds.clear()
-
     def calc_action(self, predictions):
         rand_num = np.random.uniform()
         if rand_num < self._epsilon:

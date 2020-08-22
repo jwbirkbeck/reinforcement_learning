@@ -28,8 +28,6 @@ class QLearnAgent:
     def wipe_memory(self):
         self.memory._observation.clear()
         self.memory._qpreds.clear()
-        self.memory._reward.clear()
-        self.memory._action.clear()
 
     def calc_action(self, predictions):
         rand_num = np.random.uniform()

@@ -12,9 +12,3 @@ class Memory:
 
     def append_qpreds(self, qpreds):
         self._qpreds.append(qpreds)
-
-    def append_reward(self, reward):
-        self._reward.append(reward)
-
-    def append_action(self, action):
-        self._action.append(action)

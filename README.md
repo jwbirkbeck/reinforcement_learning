@@ -39,7 +39,7 @@ Untrained:          |  Trained:
 
 (Note that the pole being unbalanced in the same direction in both gifs is chance - the environment is initialised with a slight perturbation to both angular velocity and position, and so could equally have started with the pole unbalanced to the left)
 
-It took nearly 3000 episodes to train the cartpole agent to win 50 times in a row. To win, the agent must balance the pole for 200 frames. 3000 episodes for such a simple environment is not a record by any means but demonstrates that the generalisable classes and class methods can be used for more complex environments!
+It took nearly 3000 episodes where `learning_rate=0.01` to train the cartpole agent to win 50 times in a row. To win, the agent must balance the pole for 200 frames. 3000 episodes for such a simple environment is not an outright record by any means but demonstrates that the generalisable classes and class methods can be used for more complex environments!
 
 ```
 ...

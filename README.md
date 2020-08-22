@@ -29,7 +29,6 @@ This project uses:
 * Epsilon-greedy policy for exploration (the cartpole environment is well suited to this as random actions are likely to be rewarded as the (semi-random) beginning state space is close to the optimal area in the state space. In other words, the pole starts nearly balanced so random actions will sometimes help to balance the pole, resulting in effective exploration. 
 
 ## Untrained and trained cartpole
-### Untrained:
 
 * The untrained agent fails within 10-15 frames as the pole's angle exceeds the environment's limits and the game ends. 
 * The trained agents succeeds at balancing the pole within the environment's limits for 200 frames, 50 games in a row. 

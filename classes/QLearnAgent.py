@@ -31,19 +31,19 @@ class QLearnAgent:
         self.memory._reward.clear()
         self.memory._action.clear()
 
-    def calc_action(self):
+    def calc_action(self, predictions):
         rand_num = np.random.uniform()
         if rand_num < self._epsilon:
             action = self.game.env.action_space.sample()
         else:
-            action = np.argmax(self.brain.predict(self.game.observation))
+            action = np.argmax(predictions)
         return action
 
     def _play_game(self, verbose = False):
         self.game.reset_env()
         while not self.game.done:
             current_qpreds = self.brain.predict(self.game.observation)
-            current_action = self.calc_action()
+            current_action = self.calc_action(current_qpreds)
             current_obs = self.game.observation
 
             self.game.take_action(current_action)

@@ -56,7 +56,7 @@ class QLearnAgent:
                 current_qpreds[0, current_action] = self.game.reward
                 self.memory.append_observation(current_obs)
                 self.memory.append_qpreds(current_qpreds[0])
-                if verbose:
+                if verbose & (self._game_counter % 25 == 0):
                     print('{} frames in game {}, on a winstreak of {}. Total wins {}'.format(self.game.frames,
                                                                                              self._game_counter,
                                                                                              self.winstreak,
@@ -69,7 +69,7 @@ class QLearnAgent:
                 self.memory.append_observation(current_obs)
                 self.memory.append_qpreds(current_qpreds[0])
                 self.winstreak = 0
-                if verbose:
+                if verbose & (self._game_counter % 25 == 0):
                     print('{} frames in game {}, on a winstreak of {}. Total wins {}'.format(self.game.frames,
                                                                                              self._game_counter,
                                                                                              self.winstreak,
@@ -99,8 +99,8 @@ class QLearnAgent:
             self.game.env = Monitor(self.game.env, 'recording', force=True)
         self.game.reset_env()
         while not self.game.done:
-            self.brain.predict(self.game.observation)
-            action = self.calc_action()
+            current_qpreds = self.brain.predict(self.game.observation)
+            action = self.calc_action(current_qpreds)
             self.game.env.render()
             self.game.take_action(action)
             if self.game.done and self.game.won:

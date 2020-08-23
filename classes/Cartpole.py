@@ -11,8 +11,8 @@ class Cartpole:
         self.frames = 0
         self.won = False
         self.lost = False
-        self.input_shape = 4
-        self.output_shape = 2
+        self.observation_space = 4
+        self.action_space = 2
         self.pressed_action = None
 
     # Each time we take an action, we want to store what we did, what happens in the next frame, and count the frame

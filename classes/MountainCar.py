@@ -25,10 +25,8 @@ class MountainCar:
         if done and self.observation[0] >= 0.5:
             self.done = True
             self.won = True
-            self.reward += 1
         elif done and self.observation[0] < 0.5:
             self.lost = True
-            self.reward += -1
 
     # resets the env to the initial state.
     def reset_env(self):

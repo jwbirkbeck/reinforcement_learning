@@ -6,13 +6,12 @@ clear_session()
 agent = QLearnAgent(game = MountainCar(),
                     input_shape=MountainCar().input_shape,
                     output_shape=MountainCar().output_shape,
-                    learning_rate = 0.001,
+                    learning_rate = 0.05,
                     memory_length = 10000)
-
 
 while agent.winstreak < 10:
     agent.play_games(1, verbose=True)
-    agent.batch_train(32, verbose = False)
+    agent.batch_train(32, verbose=False)
 
 agent.display_gameplay()
 

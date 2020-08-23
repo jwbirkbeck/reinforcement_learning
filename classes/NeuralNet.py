@@ -14,11 +14,11 @@ class NeuralNet:
         # Hardcoded network structure for now, but this can be parameterised
         self.model = Sequential([
             Dense(30, input_shape=(input_shape,)),
-            Activation('tanh'),
+            Activation('relu'),
             Dense(20),
-            Activation("tanh"),
+            Activation("relu"),
             Dense(10),
-            Activation("tanh"),
+            Activation("relu"),
             Dense(output_shape),
             Activation('linear')
             ])

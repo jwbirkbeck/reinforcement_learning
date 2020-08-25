@@ -45,35 +45,27 @@ class QLearnAgent:
 
             if not self.game.done:
                 current_qpreds[0, current_action] = self.game.reward + self._discount_rate * np.max(next_prediction)
-                self.memory.append_observation(current_obs)
-                self.memory.append_qpreds(current_qpreds[0])
-            # If the game is done, we've either lost or won
-            elif self.game.done and self.game.won:
-                self._game_counter +=1
-                self.winstreak += 1
-                self._total_wins += 1
-                # we've won, reward the win but do not use the next frame's predictions are they are not relevant
+            elif self.game.done:
+                self._game_counter += 1
                 current_qpreds[0, current_action] = self.game.reward
-                self.memory.append_observation(current_obs)
-                self.memory.append_qpreds(current_qpreds[0])
-                if verbose & (self._game_counter % 25 == 0):
+                # If the game is done, we've either lost or won
+                if self.game.won:
+                    self.winstreak += 1
+                    self._total_wins += 1
+                    # we've won, reward the win but do not use the next frame's predictions are they are not relevant
+
+                elif self.game.lost:
+                    self.winstreak = 0
+
+                if verbose and self._game_counter % 25 == 0:
                     print('{} frames in game {}, on a winstreak of {}. Total wins {}'.format(self.game.frames,
                                                                                              self._game_counter,
                                                                                              self.winstreak,
                                                                                              self._total_wins))
 
-            elif self.game.done and self.game.lost:
-                self._game_counter += 1
-                # we've lost, do stuff
-                current_qpreds[0, current_action] = self.game.reward
-                self.memory.append_observation(current_obs)
-                self.memory.append_qpreds(current_qpreds[0])
-                self.winstreak = 0
-                if verbose & (self._game_counter % 25 == 0):
-                    print('{} frames in game {}, on a winstreak of {}. Total wins {}'.format(self.game.frames,
-                                                                                             self._game_counter,
-                                                                                             self.winstreak,
-                                                                                             self._total_wins))
+            self.memory.append_observation(current_obs)
+            self.memory.append_qpreds(current_qpreds[0])
+
 
     def play_games(self, num_games, verbose):
         for _ in range(num_games):

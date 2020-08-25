@@ -1,17 +1,18 @@
 from classes.QLearnAgent import QLearnAgent
 from classes.Cartpole import Cartpole
-from keras.backend import clear_session
-from keras.models import load_model
-
+from tensorflow.keras.backend import clear_session
+from tensorflow.keras.models import load_model
 
 clear_session()
+
+
 
 agent = QLearnAgent(game = Cartpole(),
                     input_shape=Cartpole().observation_space,
                     output_shape=Cartpole().action_space,
                     learning_rate = 0.001)
 
-# agent.brain.keras_clear_session()
+
 while agent.winstreak < 50:
     agent.play_games(1, verbose=True)
     agent.batch_train(32, verbose = False)

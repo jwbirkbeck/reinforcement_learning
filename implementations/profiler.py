@@ -1,7 +1,7 @@
 import cProfile
 from classes.QLearnAgent import QLearnAgent
 from classes.MountainCar import MountainCar
-from keras.backend import clear_session
+from tensorflow.keras.backend import clear_session
 clear_session()
 
 agent = QLearnAgent(game = MountainCar(),
@@ -12,7 +12,7 @@ agent = QLearnAgent(game = MountainCar(),
 
 
 def func(agent):
-    for _ in range(20):
+    for _ in range(1):
         agent.play_games(1, verbose=True)
         agent.batch_train(32, verbose=False)
 

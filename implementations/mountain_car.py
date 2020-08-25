@@ -1,7 +1,8 @@
 from classes.QLearnAgent import QLearnAgent
 from classes.MountainCar import MountainCar
-from keras.backend import clear_session
-from keras.models import load_model
+from tensorflow.keras.backend import clear_session
+from tensorflow.keras.models import load_model
+
 clear_session()
 
 agent = QLearnAgent(game = MountainCar(),

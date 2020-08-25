@@ -1,11 +1,14 @@
 from classes.QLearnAgent import QLearnAgent
 from classes.Cartpole import Cartpole
 from keras.backend import clear_session
+from keras.models import load_model
+
+
 clear_session()
 
 agent = QLearnAgent(game = Cartpole(),
-                    input_shape=Cartpole().input_shape,
-                    output_shape=Cartpole().output_shape,
+                    input_shape=Cartpole().observation_space,
+                    output_shape=Cartpole().action_space,
                     learning_rate = 0.001)
 
 # agent.brain.keras_clear_session()
@@ -24,3 +27,7 @@ for _ in range(100):
     agent.batch_train(32)
 
 agent.display_gameplay(save_gif=False)
+
+agent.brain.model.save('cartpole.model')
+agent.brain.model = load_model('cartpole.model')
+

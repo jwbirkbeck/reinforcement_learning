@@ -5,11 +5,11 @@ from pynput.keyboard import Listener
 from gym.wrappers import Monitor
 import time
 
-class QLearnAgent:
 
+class QLearnAgent:
     def __init__(self, game, input_shape, output_shape,
                  epsilon=0.1, memory_length=1000, discount_rate=0.99,
-                 learning_rate = 0.001):
+                 learning_rate=0.001):
         self.brain = NeuralNet(input_shape=input_shape,
                                output_shape=output_shape,
                                learning_rate=learning_rate)
@@ -33,7 +33,7 @@ class QLearnAgent:
             action = np.argmax(predictions)
         return action
 
-    def _play_game(self, verbose = False):
+    def _play_game(self, verbose=False):
         self.game.reset_env()
         while not self.game.done:
             current_qpreds = self.brain.predict(self.game.observation)
@@ -66,14 +66,13 @@ class QLearnAgent:
             self.memory.append_observation(current_obs)
             self.memory.append_qpreds(current_qpreds[0])
 
-
     def play_games(self, num_games, verbose):
         for _ in range(num_games):
             self._play_game(verbose)
 
     def _sample_memory(self, sample_length):
         memory_size = len(self.memory._observation)
-        sample_index = np.random.choice(range(memory_size), sample_length, replace = True)
+        sample_index = np.random.choice(range(memory_size), sample_length, replace=True)
         self._mem_sample_obs = np.array(self.memory._observation)[sample_index]
         self._mem_sample_qpreds = np.array(self.memory._qpreds)[sample_index]
 
@@ -81,12 +80,12 @@ class QLearnAgent:
         self._mem_sample_obs = None
         self._mem_sample_qpreds = None
 
-    def batch_train(self, sample_size, verbose = False):
+    def batch_train(self, sample_size, verbose=False):
         self._sample_memory(sample_size)
-        self.brain.train_model(x = self._mem_sample_obs, y = self._mem_sample_qpreds, verbose=verbose)
+        self.brain.train_model(x=self._mem_sample_obs, y=self._mem_sample_qpreds, verbose=verbose)
         self._flush_memory_samples()
 
-    def display_gameplay(self, save_gif = False):
+    def display_gameplay(self, save_gif=False):
         if save_gif:
             self.game.env = Monitor(self.game.env, 'recording', force=True)
         self.game.reset_env()

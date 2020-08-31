@@ -1,10 +1,12 @@
 import os
-os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Activation
+from tensorflow.keras import optimizers
+from tensorflow.keras import backend
+from tensorflow.compat.v1 import disable_eager_execution
 
-from keras.models import Sequential
-from keras.layers import Dense, Activation
-from keras import optimizers
-from keras import backend
+disable_eager_execution()
 
 class NeuralNet:
     def __init__(self, input_shape, output_shape, learning_rate):
@@ -31,15 +33,15 @@ class NeuralNet:
 
     def predict(self, observation):
         obs = observation.reshape((1, self._input_shape))
-        prediction = self.model.predict(obs)
+        prediction = self.model.predict_on_batch(obs)
         return prediction
 
     # The train output is not useful, the model itself will have been updated so this can be lost
     def train_model(self, x, y, verbose):
         if verbose:
-            train_output = self.model.fit(x=x, y=y, verbose=1)
+            train_output = self.model.train_on_batch(x=x, y=y)
         else:
-            train_output = self.model.fit(x=x, y=y, verbose=0)
+            train_output = self.model.train_on_batch(x=x, y=y)
 
     def keras_clear_session(self):
         backend.clear_session()

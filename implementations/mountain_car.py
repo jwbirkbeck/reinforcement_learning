@@ -1,7 +1,8 @@
 from classes.QLearnAgent import QLearnAgent
 from classes.MountainCar import MountainCar
-from keras.backend import clear_session
-from keras.models import load_model
+from tensorflow.keras.backend import clear_session
+from tensorflow.keras.models import load_model
+import gc
 clear_session()
 
 agent = QLearnAgent(game = MountainCar(),
@@ -12,9 +13,13 @@ agent = QLearnAgent(game = MountainCar(),
 
 # to avoid the memory leak currently in keras, we'll have to train in groups of 10k before saving, restarting the keras
 # session and loading the model back in:
-while agent._game_counter <= 20000:
+while agent.winstreak < 25:
     agent.play_games(1, verbose=True)
     agent.batch_train(32, verbose=False)
+    if agent._game_counter % 5000 == 0:
+        agent.brain.model.save('mountaincar.model')
+
+
 
 agent.brain.model.save('mountaincar.model')
 clear_session()
@@ -33,3 +38,8 @@ for _ in range(1000):
     agent.batch_train(32, verbose=True)
 
 agent.display_gameplay()
+
+
+agent.game.reset_env()
+while True:
+    agent.batch_train(32, verbose=False)

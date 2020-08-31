@@ -33,7 +33,7 @@ class NeuralNet:
 
     def predict(self, observation):
         obs = observation.reshape((1, self._input_shape))
-        prediction = self.model.predict(obs)
+        prediction = self.model.predict_on_batch(obs)
         return prediction
 
     # The train output is not useful, the model itself will have been updated so this can be lost

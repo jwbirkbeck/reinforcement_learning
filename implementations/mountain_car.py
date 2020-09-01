@@ -6,8 +6,8 @@ import gc
 clear_session()
 
 agent = QLearnAgent(game = MountainCar(),
-                    input_shape=MountainCar().input_shape,
-                    output_shape=MountainCar().output_shape,
+                    input_shape=MountainCar().observation_space,
+                    output_shape=MountainCar().action_space,
                     learning_rate = 0.01,
                     memory_length = 10000)
 

@@ -45,6 +45,3 @@ class NeuralNet:
 
     def keras_clear_session(self):
         backend.clear_session()
-
-    # def save_model
-    # def load_model

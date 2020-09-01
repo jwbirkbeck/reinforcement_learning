@@ -6,7 +6,7 @@ from tensorflow.keras import optimizers
 from tensorflow.keras import backend
 from tensorflow.compat.v1 import disable_eager_execution
 
-disable_eager_execution()
+#disable_eager_execution()
 
 class NeuralNet:
     def __init__(self, input_shape, output_shape, learning_rate):

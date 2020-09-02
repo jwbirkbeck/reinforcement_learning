@@ -9,16 +9,13 @@ Solve the cartpole environment from the OpenAI Gym with a proof of concept scrip
 
 This project uses:
 
-* The amdgpu-pro driver (not required if you're learning via CPU)
-* Tensorflow, keras, and plaidML; plaidML will require a pip install and not a conda install (see plaidml documentation)
+* The ROCm driver (not required if you're learning via CPU)
+* Tensorflow-ROCm
 * Anaconda
 * The OpenAI Gym (install via `conda install -c conda-forge gym`).
 * A few other python packages (a `requirements.txt` is provided for replicating my environment)
 
-### Current notes
-* Learning via human should maybe reward every move the network make that is like a human's, rather than using the normal Q updating logic. 
-* Storing all rewards and then discounting them from the end may be quicker, and for environments like mountain car where naive exploration will never reach the positive reward may lead to more robust learning?
-
+The model objects should be loadable and executable by a standard tensorflow install (CPU or GPU), but that hasn't been tested.
 
 # CartPole
 
@@ -49,7 +46,24 @@ It took nearly 3000 episodes where `learning_rate=0.01` to train the cartpole ag
 200 frames in game 2793, on a winstreak of 50. Total wins 279
 ```
 
-# MountainCar
-[MountainCar](https://gym.openai.com/envs/MountainCar-v0/) is a slightly more complex environment than cartpole. On applying the classes developed for cartpole to the new environment, it's apparent that an epsilon-greedy approach to exploration is not effective. Even by viewing [the environment](https://gym.openai.com/envs/MountainCar-v0/) you can see that random actions from the starting position (around the bottom of the valley) will not result in receiving the reward in a reasonable timeframe.
+# Acrobot
 
-Some googling led to a paper which discusses [eligibility traces in the mountaincar environment](https://link.springer.com/content/pdf/10.1007/BF00114726.pdf). There's a chapter on eligibility traces in [Reinforcement Learning: An Introduction](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf). I'll attempt this environment after some reading! (I _could_ cheat by teaching the agent to win by playing the game myself - the `human_game` method in the `QLearnAgent` class (see code) can do this but that's not the point)
+Untrained:          |  Trained:
+:-------------------------:|:-------------------------:
+<img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/untrained_agent_cartpole.gif" alt="Untrained" width="400">  |  <img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/trained_agent_acrobot.gif" alt="Untrained" width="400">
+
+'Solving' this env takes much longer than CartPole. I have a memory leak in Keraa/Tensorflow ([similar to the latest comments on this issue](https://github.com/tensorflow/tensorflow/issues/33030)), which means I've had to implement basic model saving to avoid losing all progress on overnight training runs. This means, unlike cartpole, I don't currently know how many games it took to train, as I had to restart from a saved intermediate model a few times, but I'd guess it was more than 20,000. An enhancement would be to save the entire agent including the game counter, rather than just the tensorflow model, but the basic saving works for now.
+
+The arm can only input torque around the second joint, not the fixed pivot point. This means that momentum must be built to swing the tip of the arm above the line. 
+
+There's a few things to mention at this point:
+1) My agent memory and training logic is very basic; I'm only storing the states and current model's predicted Q values. This means that when the current model is trained via sampling the memory, the current NN weights are being updated on experiences from older versions of the model. This isn't ideal. 
+2) My exploration policy is  basic, with it being epsilon greedy, and for this environment where a reward is only observed when the second link/arm is above the line, random actions will hardly ever result in being rewarded in this environment. 
+3) My  basic implementation of Q learning means that, even if a reward is obtained randomly, this observation of a single frame's positive reward will only have a small impact on the model weights. Based on the Reinforcement Learning: An Introduction book by Sutton/Barto, implementing a Monte Carlo style approach where the rewards from the whole episode are processed at the end of the episode would probably result in much better learning in this scenario. (Or eligibility traces)
+
+With the above in mind, I'm pleased this simple Deep Q Learning agent managed to learn this environment in a relatively short period of time. 
+
+# MountainCar
+[MountainCar](https://gym.openai.com/envs/MountainCar-v0/) is another environment that's more complex than cartpole. After leaving an agent training for some time, some progress is made, but it takes days rather than 10 minutes for the agents to make visible progress. There is still some way to go before the agent would be fully trained, as well. 
+
+As mentioned above in the Acrobot example, a nice extension to try would be [eligibility traces](https://link.springer.com/content/pdf/10.1007/BF00114726.pdf). There's a chapter on eligibility traces in [Reinforcement Learning: An Introduction](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf). Now that the basic `QLearnAgent` class has been shown to work, I'll go some tidying up of the classes in that approach before implementing a more complex agent inspried by the eligibility traces concept. 

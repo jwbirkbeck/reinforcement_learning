@@ -53,7 +53,7 @@ It took nearly 3000 episodes where `learning_rate=0.01` to train the cartpole ag
 
 Untrained:          |  Trained:
 :-------------------------:|:-------------------------:
-<img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/untrained_agent_cartpole.gif" alt="Untrained" width="400">  |  <img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/trained_agent_acrobot.gif" alt="Untrained" width="400">
+<img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/untrained_agent_acrobot.gif" alt="Untrained" width="400">  |  <img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/trained_agent_acrobot.gif" alt="Untrained" width="400">
 
 'Solving' this env takes much longer than CartPole. I have a memory leak in Keraa/Tensorflow ([similar to the latest comments on this issue](https://github.com/tensorflow/tensorflow/issues/33030)), which means I've had to implement basic model saving to avoid losing all progress on overnight training runs. This means, unlike cartpole, I don't currently know how many games it took to train, as I had to restart from a saved intermediate model a few times, but I'd guess it was more than 20,000. An enhancement would be to save the entire agent including the game counter, rather than just the tensorflow model, but the basic saving works for now.
 

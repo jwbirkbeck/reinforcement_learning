@@ -22,6 +22,8 @@ The model objects should be loadable and executable by another tensorflow instal
 
 # CartPole
 
+### Purpose: Balance the pole on the cart, not falling more than a few degrees of centre, and not Travelling off screen
+
 [CartPole](https://gym.openai.com/envs/CartPole-v0/) is an introductory environment to learn to apply basic reinforcement learning concepts. The specific approach I've taken to solve the environment is:
 * A temporal difference method, where the current state's predicted Q values for the chosen action are updated from the observation of the next state's reward and max predicted Q value. 
 * Waiting until the end of the episode before training, even though TD learning allows online training.
@@ -50,6 +52,8 @@ It took nearly 3000 episodes where `learning_rate=0.01` to train the cartpole ag
 ```
 
 # Acrobot
+
+### Purpose: Put the second linkage above the black line
 
 Untrained:          |  Trained:
 :-------------------------:|:-------------------------:

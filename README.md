@@ -7,15 +7,16 @@ Solve the cartpole environment from the OpenAI Gym with a proof of concept scrip
 
 ### Requirements:
 
-This project uses:
+For this project I've used:
 
-* The ROCm driver (not required if you're learning via CPU)
-* Tensorflow-ROCm
+* Ryzen 2600 and Vega56 GPU
+* [AMD ROCm](https://rocmdocs.amd.com/en/latest/Installation_Guide/Installation-Guide.html)
+* [Tensorflow-ROCm](https://github.com/ROCmSoftwarePlatform/tensorflow-upstream)
 * Anaconda
 * The OpenAI Gym (install via `conda install -c conda-forge gym`).
-* A few other python packages (a `requirements.txt` is provided for replicating my environment)
+* A few other python packages (a `requirements.txt` is present)
 
-The model objects should be loadable and executable by a standard tensorflow install (CPU or GPU), but that hasn't been tested.
+The model objects should be loadable and executable by another tensorflow install (CPU or GPU) on e.g. an Nvidia GPU, but I haven't tested this. 
 
 # CartPole
 

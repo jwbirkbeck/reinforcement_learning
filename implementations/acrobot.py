@@ -2,7 +2,6 @@ from classes.QLearnAgent import QLearnAgent
 from classes.Acrobot import Acrobot
 from tensorflow.keras.backend import clear_session
 from tensorflow.keras.models import load_model
-import gc
 clear_session()
 
 agent = QLearnAgent(game = Acrobot(),
@@ -23,4 +22,4 @@ while agent.winstreak < 25:
         print("model saved!")
 
 
-agent.display_gameplay(save_gif=False)
+agent.display_gameplay(save_gif=True)

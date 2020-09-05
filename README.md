@@ -74,3 +74,8 @@ With the above in mind, I'm pleased this simple Deep Q Learning agent managed to
 [MountainCar](https://gym.openai.com/envs/MountainCar-v0/) is another environment that's more complex than cartpole. After leaving an agent training for some time, some progress is made, but it takes days rather than 10 minutes for the agents to make visible progress. There is still some way to go before the agent would be fully trained, as well. 
 
 As mentioned above in the Acrobot example, a nice extension to try would be [eligibility traces](https://link.springer.com/content/pdf/10.1007/BF00114726.pdf). There's a chapter on eligibility traces in [Reinforcement Learning: An Introduction](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf). Now that the basic `QLearnAgent` class has been shown to work, I'll go some tidying up of the classes in that approach before implementing a more complex agent inspried by the eligibility traces concept. 
+
+Untrained:          |  Trained:
+:-------------------------:|:-------------------------:
+<img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/untrained_agent_mountaincar.gif" alt="Untrained" width="400">  |  <img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/trained_agent_mountaincar.gif" alt="Untrained" width="400">
+

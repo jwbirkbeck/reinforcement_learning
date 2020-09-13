@@ -42,7 +42,7 @@ For exploration, an **epsilion greedy** policy, was used. Epsilon is not hardcod
 
 # CartPole
 
-### Purpose: Balance the pole on the cart, not falling more than a few degrees of centre, and not Travelling off screen
+#### Purpose: Balance the pole on the cart, not allowing the pole to fall more than a few degrees past vertical, and not travelling too far horizontally
 
 Untrained:          |  Trained:
 :-------------------------:|:-------------------------:

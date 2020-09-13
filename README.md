@@ -35,31 +35,27 @@ I am not making the most of a benefit of temporal difference learning by choosin
 The training of this agent uses a variant of stochastic/mini-batch gradient descent, sampling from a 'memory' of previous experiences. Tensorflow provides a number of gradient descent algorithms - one of which being ADAM, the algorithm I chose to use here. Researching the relative performance of the various algorithms available was not a part of this project. I found ADAM described as potentially quicker than a normal mini-batch gradient descent so I choice to use it without much more thought than this. I would expect the agent to converge to a similar result with a usual mini-batch GD algorithm as well.
 
 ### Known weaknesses to the `QLearnAgent` implementation:
-* The memory buffer is _not_ used for experience replay - a better agent would rescore the remembered observation so that the current prediction is updated. Currently, only the Q scores from the time that experience was recorded are stored, so in effect the agent's previous predictions are being used to train the current model. I would expect the agent to 'solve' an environment quicker if the observations were stored and the Q values predicted as part of the training step.
-* The `human_game` method demonstrably works, but is not well suited to the temporal difference approach. Since the agent uses the next timesteps Q values to improve the current The `human_game` method primarily 
+* The stored experiences are _not_ used properly for experience replay - true experience reply would have an agent rescore the stored observation so that the current model is updated using current Q predictions on historical observations. Currently, only the Q scores from the time that experience was recorded are stored. This means the agent's previous predictions are being used to train the current model. I would expect the agent to 'solve' an environment quicker if the observations were stored and the Q values predicted as part of the training step. For larger 'memory' lengths, this becomes more of a concern.
+* The `human_game` method demonstrably works, but is not well suited to the temporal difference approach. Since the agent uses the next timesteps Q values to improve the current The `human_game` method does not fully utilise the value of seeing a human solve an environment. A separate Monte Carlo approach to learning in the `human_game` method would potenially be much more sensible, as for each frame observed, the actual Q value for the set of actions taken is calculated using all rewards from the current state observation until the  the terminal state. 
 
 # CartPole
 
 ### Purpose: Balance the pole on the cart, not falling more than a few degrees of centre, and not Travelling off screen
 
-[CartPole](https://gym.openai.com/envs/CartPole-v0/) is an introductory environment to learn to apply basic reinforcement learning concepts. The specific approach I've taken to solve the environment is:
-* A temporal difference method, where the current state's predicted Q values for the chosen action are updated from the observation of the next state's reward and max predicted Q value. 
-* Waiting until the end of the episode before training, even though TD learning allows online training.
-* Sampling the memory to avoid correlation between observations (seen in the book)
-* Epsilon-greedy policy for exploration. The cartpole environment looks well suited to this,as the initial states appear close to an ideal state of balancing. I think epsilon-greedy exploration will result in effective exploration in the high-interest state spaces. 
-
-## Untrained and trained cartpole
-
-* The untrained agent fails within 10-15 frames as the pole's angle exceeds the environment's limits and the game ends. 
-* The trained agents succeeds at balancing the pole within the environment's limits for 200 frames, 50 games in a row. 
-
 Untrained:          |  Trained:
 :-------------------------:|:-------------------------:
 <img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/untrained_agent_cartpole.gif" alt="Untrained" width="400">  |  <img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/trained_agent_cartpole.gif" alt="Untrained" width="400">
 
+[CartPole](https://gym.openai.com/envs/CartPole-v0/) is an introductory environment to learn to apply basic reinforcement learning concepts.
+
+* The untrained agent fails within 10-15 frames as the pole's angle exceeds the environment's limits and the game ends. 
+* The trained agents succeeds at balancing the pole within the environment's limits for 200 frames, 50 games in a row. 
+
 (Note that the pole being unbalanced in the same direction in both gifs is chance - the environment is initialised with a slight perturbation to both angular velocity and position, and so could equally have started with the pole unbalanced to the left)
 
-It took nearly 3000 episodes where `learning_rate=0.01` to train the cartpole agent to win 50 times in a row. To win, the agent must balance the pole for 200 frames. 3000 episodes for such a simple environment is not an outright record by any means but demonstrates that the generalisable classes and class methods can be used for more complex environments!
+This environment was used while developing the `QLearnAgent` class and related classes such as `NeuralNetwork` and `Memory`. This environment takes a short amount of wall clock time (around 10 minutes for the finished `QLearnAgent`) which allowed relatively quick testing during development.
+
+It took nearly 3000 episodes where `learning_rate=0.01` to train the cartpole agent to win 50 times in a row. To win, the agent must balance the pole for 200 frames.
 
 ```
 ...

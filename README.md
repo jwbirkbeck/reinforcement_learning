@@ -36,7 +36,7 @@ The training of this agent uses a variant of stochastic/mini-batch gradient desc
 
 For exploration, an **epsilion greedy** policy, was used. Epsilon is not hardcoded in the `QLearnAgent`, but I have used `0.1` for the cartpole, acrobot, and mountain-car environments below. 
 
-### Known weaknesses to the `QLearnAgent` implementation:
+#### Known weaknesses to the `QLearnAgent` implementation:
 * The stored experiences are _not_ used properly for experience replay - true experience reply would have an agent rescore the stored observation so that the current model is updated using current Q predictions on historical observations. Currently, only the Q scores from the time that experience was recorded are stored. This means the agent's previous predictions are being used to train the current model. I would expect the agent to 'solve' an environment quicker if the observations were stored and the Q values predicted as part of the training step. For larger 'memory' lengths, this becomes more of a concern.
 * The `human_game` method demonstrably works, but is not well suited to the temporal difference approach. Since the agent uses the next timesteps Q values to improve the current The `human_game` method does not fully utilise the value of seeing a human solve an environment. A separate Monte Carlo approach to learning in the `human_game` method would potenially be much more sensible, as for each frame observed, the actual Q value for the set of actions taken is calculated using all rewards from the current state observation until the  the terminal state. 
 

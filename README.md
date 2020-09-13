@@ -57,7 +57,7 @@ Untrained:          |  Trained:
 
 This environment was used while developing the `QLearnAgent` class and related classes such as `NeuralNetwork` and `Memory`. This environment takes a short amount of wall clock time (around 10 minutes for the finished `QLearnAgent`) which allowed relatively quick testing during development.
 
-This is a simple environment to solve, for multiple reasons. The primary reason I beleive it's simple is that the pole starts nearly balanced. 
+This is a simple environment to solve, for multiple reasons. The initial states are close to the 'optimal' state of a balanced pole, so epsilon exploration will result in exploration of both negative and positive states from the beginning of the agent's training process. This is not the case in, for instance, the mountain car environment below, where initially the agent is likely to only explore unrewarding states. 
 
 It took nearly 3000 episodes where `learning_rate=0.01` to train the cartpole agent to win 50 times in a row. To win, the agent must balance the pole for 200 frames.
 

@@ -57,9 +57,9 @@ Untrained:          |  Trained:
 
 This environment was used while developing the `QLearnAgent` class and related classes such as `NeuralNetwork` and `Memory`. This environment takes a short amount of wall clock time (around 10 minutes for the finished `QLearnAgent`) which allowed relatively quick testing during development.
 
-This is a simple environment to solve, for multiple reasons. The initial states are close to the 'optimal' state of a balanced pole, so epsilon exploration will result in exploration of both negative and positive states from the beginning of the agent's training process. This is not the case in, for instance, the mountain car environment below, where initially the agent is likely to only explore unrewarding states. 
+This is a simple environment to solve. The initial states are close to the 'optimal' state of a balanced pole, so epsilon exploration will result in exploration of both negative and positive states from the beginning of the agent's training process. This is not the case in, for instance, the mountain car environment below, where initially the agent is likely to only explore unrewarding states. 
 
-It took nearly 3000 episodes where `learning_rate=0.01` to train the cartpole agent to win 50 times in a row. To win, the agent must balance the pole for 200 frames.
+It took nearly 3000 episodes with `learning_rate=0.01` to train the cartpole agent to win 50 times in a row. To win, the agent must balance the pole for 200 frames.
 
 ```
 ...
@@ -71,7 +71,7 @@ It took nearly 3000 episodes where `learning_rate=0.01` to train the cartpole ag
 
 # Acrobot
 
-### Purpose: Put the second linkage above the black line
+#### Purpose: Put the second linkage of the acrobot above the black line
 
 Untrained:          |  Trained:
 :-------------------------:|:-------------------------:
@@ -89,11 +89,13 @@ There's a few things to mention at this point:
 With the above in mind, I'm pleased this simple Deep Q Learning agent managed to learn this environment in a relatively short period of time. 
 
 # MountainCar
-[MountainCar](https://gym.openai.com/envs/MountainCar-v0/) is another environment that's more complex than cartpole. After leaving an agent training for some time, some progress is made, but it takes days rather than 10 minutes for the agents to make visible progress. There is still some way to go before the agent would be fully trained, as well. 
-
-As mentioned above in the Acrobot example, a nice extension to try would be [eligibility traces](https://link.springer.com/content/pdf/10.1007/BF00114726.pdf). There's a chapter on eligibility traces in [Reinforcement Learning: An Introduction](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf). Now that the basic `QLearnAgent` class has been shown to work, I'll go some tidying up of the classes in that approach before implementing a more complex agent inspried by the eligibility traces concept. 
-
+#### Purpose: Drive the car to the top of the right hill, by building momentum. 
 Untrained:          |  Trained:
 :-------------------------:|:-------------------------:
 <img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/untrained_agent_mountaincar.gif" alt="Untrained" width="400">  |  <img src="https://github.com/JWB110123/reinforcement_learning/blob/master/recording/trained_agent_mountaincar.gif" alt="Untrained" width="400">
+
+[MountainCar](https://gym.openai.com/envs/MountainCar-v0/) is another environment that's more complex than cartpole. After leaving an agent training for some time, the environment is 'solved', but this takes days rather than the 10 minutes it took to 'solve' cartpole. There is still some way to go before the agent would be fully trained, as well. 
+
+As mentioned above in the Acrobot example, a nice extension to try would be [eligibility traces](https://link.springer.com/content/pdf/10.1007/BF00114726.pdf). There's a chapter on eligibility traces in [Reinforcement Learning: An Introduction](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf). Now that the basic `QLearnAgent` class has been shown to work, I'll go some tidying up of the classes in that approach before implementing a more complex agent inspried by the eligibility traces concept. 
+
 

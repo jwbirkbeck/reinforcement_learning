@@ -1,10 +1,14 @@
 # Reinforcement Learning
 
+Note: I'm reading through _Reinforcement Learning: A Introduction_ by Sutton and Barto as I'm building this repository, which I'll refer to as 'the book' below!
+
+
 ### Purpose:
 
-Solve the cartpole environment from the OpenAI Gym with a proof of concept script, before building generalisable classes to apply to more complicated environments.
+* [x] Build a simple temporal difference Q learning agent, and use it to solve a few simple environments.
+* [ ] Build a more complex agent, potentially using concepts like eligibility traces, or off-policy learning.
+* [ ] Compare the performance of the two. Apply the more complex agent to a more complex environment if learning performance is significantly better.
 
-I'm reading through _Reinforcement Learning: A Introduction_ by Sutton and Barto as I'm building this code, which I'll refer to as 'the book' below!
 
 
 ### Requirements:
@@ -19,6 +23,20 @@ For this project I've used:
 * A few other python packages (a `requirements.txt` is present)
 
 The model objects should be loadable and executable by another tensorflow install (CPU or GPU) on e.g. an Nvidia GPU, but I haven't tested this. 
+
+# Approach
+
+The `QLearnAgent` built here is a simple implementation of Deep Q Learning. While temporal difference learning allows online learning, this agent does not learn online - it waits until the end of an episode before training on it's experiences. 
+
+The difference between a Monte Carlo approach and a temporal difference approach is primarily in how the rewards are used. In a Monte Carlo approach, to update a predicted Q<sub>a, t</sub> for the action that was taken, all rewards r<sub>t+1</sub>, ..., r<sub>T</sub> until the termination of the episode at time T are needed. Temporal difference learning uses only the reward at the next time step r<sub>t+1</sub> and the Q predictions **Q**<sub>t+1</sub> for each action in the next step to update the prediction of Q<sub>a, t</sub>. This is referred to as bootstrapping in the book.
+
+I am not making the most of a benefit of temporal difference learning by choosing not to learn online, but this is acceptable as the initial environments I use are limited to be short (e.g. 200 frames). The `QLearnAgent` currently implemented does, however, reliably converge on a 'solution' for each of the three environments shown below. Rather than continually update this existing agent, now that it works, these improvements can be implemented on a more complex agent.
+
+The training of this agent uses a variant of stochastic/mini-batch gradient descent, sampling from a 'memory' of previous experiences. Tensorflow provides a number of gradient descent algorithms - one of which being ADAM, the algorithm I chose to use here. Researching the relative performance of the various algorithms available was not a part of this project. I found ADAM described as potentially quicker than a normal mini-batch gradient descent so I choice to use it without much more thought than this. I would expect the agent to converge to a similar result with a usual mini-batch GD algorithm as well.
+
+### Known weaknesses to the `QLearnAgent` implementation:
+* The memory buffer is _not_ used for experience replay - a better agent would rescore the remembered observation so that the current prediction is updated. Currently, only the Q scores from the time that experience was recorded are stored, so in effect the agent's previous predictions are being used to train the current model. I would expect the agent to 'solve' an environment quicker if the observations were stored and the Q values predicted as part of the training step.
+* The `human_game` method demonstrably works, but is not well suited to the temporal difference approach. Since the agent uses the next timesteps Q values to improve the current The `human_game` method primarily 
 
 # CartPole
 

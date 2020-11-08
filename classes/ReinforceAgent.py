@@ -1,12 +1,12 @@
 import numpy as np
-from classes.NeuralNet import NeuralNet
 from collections import deque
-
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Activation
 from tensorflow.keras import optimizers
+from tensorflow import GradientTape#
+import tensorflow as tf
 
 class ReinforceNeuralNet:
     def __init__(self, input_shape, output_shape, learning_rate):
@@ -29,17 +29,19 @@ class ReinforceNeuralNet:
         self.optimizer = optimizers.Adam(lr=learning_rate)
 
         self.model.compile(optimizer=self.optimizer,
-                           loss='mse',
+                           loss='CategoricalCrossentropy',
                            metrics=['accuracy'])
+
+    def train_model(self, x, y, verbose):
+        if verbose:
+            train_output = self.model.train_on_batch(x=x, y=y)
+        else:
+            train_output = self.model.train_on_batch(x=x, y=y)
 
     def predict(self, observation):
         obs = observation.reshape((1, self._input_shape))
         prediction = self.model.predict_on_batch(obs)
         return prediction
-
-    # The train output is not useful, the model itself will have been updated so this can be lost
-    def train_model(self, gradients_and_vars, verbose):
-        self.optimizer.apply_gradients(gradients_and_vars)
 
 class ReinforceMemory:
     def __init__(self, memory_length):
@@ -112,7 +114,8 @@ class ReinforceAgent:
         self._game_counter = 0
 
     def calc_action(self, predictions):
-        action = np.argmax(predictions)
+        # need to sample the predictions to choose the action
+        action = np.random.choice(np.arange(self.brain._output_shape), p = predictions[0])
         return action
 
     def _play_game(self, verbose=False):
@@ -146,20 +149,31 @@ class ReinforceAgent:
                                                                                              self.winstreak,
                                                                                              self._total_wins))
 
-                # calculate the differential of J:
                 discounted_future_rewards = self.memory.calc_discounted_future_rewards(self._discount_rate)
-                log_probs = self.memory.calc_log_probs()
-                # Now need to label the log probs for the action we didn't take as 0, so that we have a 0 gradient
-                # for the action we didn't take
-                actions = self.memory._actions
-                action_log_probs = log_probs.reshape(len(log_probs), 2)
-                action_log_probs[np.arange(len(log_probs)), list(actions)] = 0
-                delta_J = discounted_future_rewards.reshape(len(log_probs), 1) * action_log_probs
-                # We need to put a minus sign in because policy gradient methods are gradient ASCENT methods, and the
-                # ReinforceNeuralNetwork (copied from NeuralNetwork class for now) is implemented to minimise loss rather than maximise -loss
-                minus_delta_J = -delta_J
-                gradients_and_vars = zip(minus_delta_J, np.asarray(self.memory._observations))
-                self.brain.train_model(gradients_and_vars = gradients_and_vars, verbose = False)
+                actions = np.eye(self.brain._output_shape)[np.array(self.memory._actions)]
+                log_probs = np.log(np.asarray([self.brain.predict(i) for i in np.array(self.memory._observations)]).reshape(len(self.memory._observations), 2))
+                #log_probs[,np.array(self.memory._actions)]
+                # inverse the discounted future rewards as keras runs a gradient descent, we want ascent:
+                #formatted_disc_fut_rewards = -formatted_disc_fut_rewards
+                self.brain.model.train_on_batch(x = np.asarray(self.memory._observations), y =actions, sample_weight=np.array(discounted_future_rewards))
+                # Replay the game but with a gradient tape, and then calculate the minus_delta_J value, and then apply
+                # these as the gradients
+                # with GradientTape() as tape:
+                #     outputs = self.brain.model(np.asarray(self.memory._observations))
+                #     log_probs = tf.math.log(outputs)
+                #
+                #     # calculate the differential of J:
+                #     discounted_future_rewards = self.memory.calc_discounted_future_rewards(self._discount_rate)
+                #
+                #     # Now need to label the log probs for the action we didn't take as 0, so that we have a 0 gradient
+                #     # for the action we didn't take
+                #     actions = np.eye(self.brain._output_shape)[self.memory._actions]
+                #     log_probs = tf.math.multiply(log_probs, actions)
+                #     delta_J = tf.math.multiply(discounted_future_rewards.reshape(len(log_probs), 1), log_probs)
+                #
+                #     gradients = tape.gradient(delta_J, self.brain.model.trainable_weights)
+                #     gradients_and_vars = zip(gradients, self.brain.model.trainable_weights)
+                # self.brain.optimizer.apply_gradients(gradients_and_vars)
                 self.memory.wipe()
 
     def play_games(self, num_games, verbose):
